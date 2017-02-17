@@ -354,7 +354,7 @@ I'd like to take this opportunity to point out something you may have missed: `f
 
 `Either` is great for casual errors like validation as well as more serious, stop the show errors like missing files or broken sockets. Try replacing some of the `Maybe` examples with `Either` to give better feedback.
 
-Now, I can't help, but feel I've done `Either` a disservice by introducing it as merely a container for error messages. It captures logical disjunction (a.k.a `||`) in a type. It also encodes the idea of a *Coproduct* from category theory, which won't be touched on in this book, but is well worth reading up on as there's properties to be exploited. It is the canonical sum type (or disjoint union of sets) because its amount of possible inhabitants is the sum of the two contained types(I know that's a bit hand wavy so here's a [great article](https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/sum-types). There are many things `Either` can be, but as a functor, it is used for its error handling.
+Now, I can't help, but feel I've done `Either` a disservice by introducing it as merely a container for error messages. It captures logical disjunction (a.k.a `||`) in a type. It also encodes the idea of a *Coproduct* from category theory, which won't be touched on in this book, but is well worth reading up on as there's properties to be exploited. It is the canonical sum type (or disjoint union of sets) because its amount of possible inhabitants is the sum of the two contained types (I know that's a bit hand wavy so here's a [great article](https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/sum-types)). There are many things `Either` can be, but as a functor, it is used for its error handling.
 
 Just like with `Maybe`, we have little `either`, which behaves similarly, but takes two functions instead of one and a static value. Each function should return the same type:
 
@@ -469,7 +469,7 @@ var url = new IO(function() {
   return window.location.href;
 });
 
-//  toPairs =  String -> [[String]]
+//  toPairs ::  String -> [[String]]
 var toPairs = compose(map(split('=')), split('&'));
 
 //  params :: String -> [[String]]
@@ -685,7 +685,7 @@ We can also visualize the mapping of a morphism and its corresponding objects wi
 
 <img src="images/functormap.png" alt="functor diagram" />
 
-In addition to visualizing the mapped morphism from one category to another under the functor `F`, we see that the diagram commutes, which is to say, if you follow the arrows each route produces the same result. The different routes means different behavior, but we always end at the same type. This formalism gives us principled ways to reason about our code - we can boldly apply formulas without having to parse and examine each individual scenario. Let's take a concrete example.
+In addition to visualizing the mapped morphism from one category to another under the functor `F`, we see that the diagram commutes, which is to say, if you follow the arrows each route produces the same result. The different routes mean different behavior, but we always end at the same type. This formalism gives us principled ways to reason about our code - we can boldly apply formulas without having to parse and examine each individual scenario. Let's take a concrete example.
 
 ```js
 //  topRoute :: String -> Maybe String
@@ -736,7 +736,7 @@ map(concat(', rock on, Chicago'), ctmd);
 // Compose(Task(Maybe('Rock over London, rock on, Chicago')))
 
 ctmd.getCompose;
-// Task(Maybe('Rock over London, rock on, Chicago'))
+// Task(Maybe('Rock over London'))
 ```
 
 There, one `map`. Functor composition is associative and earlier, we defined `Container`, which is actually called the `Identity` functor. If we have identity and associative composition we have a category. This particular category has categories as objects and functors as morphisms, which is enough to make one's brain perspire. We won't delve too far into this, but it's nice to appreciate the architectural implications or even just the simple abstract beauty in the pattern.
@@ -829,7 +829,7 @@ var ex5 = undefined;
 // Write a function that uses checkActive() and showWelcome() to grant access
 // or return the error.
 
-var showWelcome = _.compose(_.add('Welcome '), _.prop('name'));
+var showWelcome = _.compose(_.concat( "Welcome "), _.prop('name'));
 
 var checkActive = function(user) {
   return user.active ? Right.of(user) : Left.of('Your account is not active');
